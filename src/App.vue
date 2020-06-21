@@ -3,7 +3,7 @@
     <div id="app">
       <h1>vue-flow-chart-editor</h1>
       <div class="description">vue-flow-chart-editor 适用架构图、流程图的渲染及编辑。</div>
-      <flow-chart-editor :flowChartData="flowChartData"></flow-chart-editor>
+      <flow-chart-editor :flowChartData="flowChartData" :flowChartConfig="flowChartConfig"></flow-chart-editor>
     </div>
   </a-config-provider>
 </template>
@@ -21,8 +21,6 @@ export default {
     return {
       locale: zhCN,
       flowChartData: {
-        width: '1500px',
-        height: '800px',
         start: {
           // shape: ellipse => 椭圆，circle => 圆形，rect => 正方形，diamond => 菱形
           shape: 'ellipse',
@@ -91,6 +89,10 @@ export default {
             ]
           }
         ]
+      },
+      flowChartConfig: {
+        width: '100%',
+        height: '800px'
       }
     }
   }

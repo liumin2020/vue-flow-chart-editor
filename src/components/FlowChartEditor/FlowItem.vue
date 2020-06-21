@@ -3,7 +3,7 @@
     <div :style="{ 'flex-basis': `${rowHeight}px` }" class="flow-item__content">
       <div class="flow-column-line" :class="{ 'is-column-start': isRowStart, 'is-column-end': isRowEnd }"></div>
       <div v-if="!isRowStart && !isRowEnd" class="flow-row-top-line" :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"></div>
-      <flow-ellipse :flowData="itemData" :isRowStart="isRowStart"></flow-ellipse>
+      <flow-handle :flowData="itemData" :isRowStart="isRowStart" @editorValueChange="editorValueChange"></flow-handle>
     </div>
     <template v-if="itemData.children && itemData.children.length">
       <div class="flow__column-item">
@@ -15,7 +15,8 @@
             :columnWidth="columnWidth"
             :rowHeight="rowHeight"
             :isColumnStart="index === 0"
-            :isColumnEnd="index === itemData.children.length - 1"></flow-item>
+            :isColumnEnd="index === itemData.children.length - 1"
+            @editorValueChange="editorValueChange"></flow-item>
         </div>
       </div>
     </template>
@@ -23,12 +24,13 @@
 </template>
 
 <script>
-import FlowEllipse from './shape/FlowEllipse'
+import FlowHandle from './FlowHandle'
 import { getTreeExtent, getTreeDeep } from './flowChartCommon'
+
 export default {
   name: 'FlowItem',
   components: {
-    FlowEllipse
+    FlowHandle
   },
   props: {
     itemData: {
@@ -78,6 +80,9 @@ export default {
   methods: {
     getPercentage (num, val) {
       return `${(100 / num) * val}%`
+    },
+    editorValueChange (val) {
+      this.$emit('editorValueChange', val)
     }
   }
 }

@@ -1,5 +1,24 @@
 @color-bg: #999;
 @color-bogder: #666;
+@font-large: 24px;
+@font-middle: 18px;
+@font-small: 14px;
+
+// handle
+@handle-width: 100px;
+@handle-height: 100px;
+
+// shape -> Ellipse
+@ellipse-width: 100px;
+@ellipse-height: 50px;
+@ellipse-line-height: 30px;
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .flex(@direction: row) {
   display: flex;
   flex-direction: @direction;
