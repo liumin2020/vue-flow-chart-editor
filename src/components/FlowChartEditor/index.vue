@@ -1,6 +1,6 @@
 <template>
   <div class="flow-chart-editor__wrapper">
-    <div ref="flowChartEditor" :style="{ width: flowChartConfig.width, height: flowChartConfig.height }" class="flow-chart-editor">
+    <div ref="flowChartEditor" :class="{ 'flow-chart-editor-grid': flowChartConfig.grid }" :style="{ width: flowChartConfig.width, height: flowChartConfig.height }" class="flow-chart-editor">
       <div :style="{ 'flex-basis': `${rowHeight}px` }" class="flow__row-item">
         <flow-item :itemData="flowChartDataCopy.start" :isRowStart="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange"></flow-item>
       </div>
@@ -44,7 +44,8 @@ export default {
       type: Object,
       default () {
         return {
-          width: '100%'
+          width: '100%',
+          grid: false
         }
       }
     }
@@ -95,6 +96,11 @@ export default {
   .flow-chart-editor {
     .flow__column-item();
     .position(relative);
+    &.flow-chart-editor-grid {
+      background-image: -webkit-linear-gradient(to bottom, transparent 74px, #ddd 75px), -webkit-linear-gradient(to right, transparent 99px, #ddd 100px);
+      background-image: linear-gradient(to bottom, transparent 74px, #ddd 75px), linear-gradient(to right, transparent 99px, #ddd 100px);
+      background-size: 100px 75px;
+    }
   }
 }
 </style>

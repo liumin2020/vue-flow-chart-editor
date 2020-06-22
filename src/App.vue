@@ -69,6 +69,12 @@ export default {
                         label: '1-2-0-0-1',
                         value: '是1-1',
                         lineText: '1-1'
+                      },
+                      {
+                        shape: 'rect',
+                        label: '1-2-0-0-2',
+                        value: '是1-2',
+                        lineText: '1-2'
                       }
                     ]
                   },
@@ -84,15 +90,32 @@ export default {
                 shape: 'rect',
                 label: '1-2-1',
                 value: '选择二',
-                lineText: 'no'
+                lineText: 'no',
+                children: [
+                  {
+                    shape: 'rect',
+                    label: '1-2-0-0-1',
+                    value: '是1-1',
+                    lineText: '1-1',
+                    children: [
+                      {
+                        shape: 'rect',
+                        label: '1-2-0-0-1',
+                        value: '是1-1',
+                        lineText: '1-1'
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
         ]
       },
       flowChartConfig: {
-        width: '100%',
-        height: '800px'
+        width: '1200px',
+        height: '900px',
+        grid: true
       }
     }
   }
