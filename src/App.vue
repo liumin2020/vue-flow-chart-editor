@@ -57,32 +57,41 @@ export default {
                 label: '1-2-0',
                 value: '是的选择？',
                 lineText: 'yes',
+                hasBranchEnd: true,
                 children: [
                   {
                     shape: 'rect',
-                    label: '1-2-0-0',
+                    label: '1-2-0-1',
                     value: '是1',
                     lineText: '1',
+                    branchEnd: true
+                  },
+                  {
+                    shape: 'rect',
+                    label: '1-2-0-0',
+                    value: '是2',
+                    lineText: '2',
                     children: [
                       {
                         shape: 'rect',
                         label: '1-2-0-0-1',
-                        value: '是1-1',
-                        lineText: '1-1'
+                        value: '是2-1',
+                        lineText: '2-1'
                       },
                       {
                         shape: 'rect',
                         label: '1-2-0-0-2',
-                        value: '是1-2',
-                        lineText: '1-2'
+                        value: '是2-2',
+                        lineText: '2-2'
                       }
                     ]
                   },
                   {
                     shape: 'rect',
                     label: '1-2-0-1',
-                    value: '是2',
-                    lineText: '2'
+                    value: '是3',
+                    lineText: '3',
+                    branchEnd: true
                   }
                 ]
               },
@@ -96,15 +105,7 @@ export default {
                     shape: 'rect',
                     label: '1-2-0-0-1',
                     value: '是1-1',
-                    lineText: '1-1',
-                    children: [
-                      {
-                        shape: 'rect',
-                        label: '1-2-0-0-1',
-                        value: '是1-1',
-                        lineText: '1-1'
-                      }
-                    ]
+                    lineText: '1-1'
                   }
                 ]
               }
@@ -115,6 +116,7 @@ export default {
       flowChartConfig: {
         width: '1200px',
         height: '900px',
+        brachIngHeight: '50px',
         grid: true
       }
     }

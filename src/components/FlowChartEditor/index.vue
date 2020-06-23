@@ -1,22 +1,23 @@
 <template>
   <div class="flow-chart-editor__wrapper">
     <div ref="flowChartEditor" :class="{ 'flow-chart-editor-grid': flowChartConfig.grid }" :style="{ width: flowChartConfig.width, height: flowChartConfig.height }" class="flow-chart-editor">
-      <div :style="{ 'flex-basis': `${rowHeight}px` }" class="flow__row-item">
-        <flow-item :itemData="flowChartDataCopy.start" :isRowStart="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange"></flow-item>
+      <div :style="{ 'flex-basis': `${rowHeight + brachIngHeight}px` }" class="flow__row-item">
+        <flow-item :itemData="flowChartDataCopy.start" :isRowStart="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange" :brachIngHeight="brachIngHeight"></flow-item>
       </div>
-      <div :style="{ 'flex-basis': `${rowHeight * (treeDeep - 1)}px` }" class="flow__row-item">
+      <div :style="{ 'flex-basis': `${rowHeight * (treeDeep - 1) + brachIngHeight * treeDeep / 2}px` }" class="flow__row-item">
         <flow-item
           v-for="(item, index) in flowChartDataCopy.children"
           :key="`row-${index}`"
           :itemData="item"
           :columnWidth="columnWidth"
           :rowHeight="rowHeight"
+          :brachIngHeight="brachIngHeight"
           :isColumnStart="index === 0"
           :isColumnEnd="index === flowChartDataCopy.children.length - 1"
           @editorValueChange="editorValueChange"></flow-item>
       </div>
       <div :style="{ 'flex-basis': `${rowHeight}px`, position: 'relative' }" class="flow__row-item">
-        <div :style="{ left: `${columnWidth / 2}px`, right: `${columnWidth / 2}px` }" class="flow-row-bottom-line"></div>
+        <!-- <div :style="{ left: `${columnWidth / 2}px`, right: `${columnWidth / 2}px` }" class="flow-row-bottom-line"></div> -->
         <flow-item :itemData="flowChartDataCopy.end" :isRowEnd="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange"></flow-item>
       </div>
     </div>
@@ -45,7 +46,8 @@ export default {
       default () {
         return {
           width: '100%',
-          grid: false
+          grid: false,
+          brachIngHeight: '50px'
         }
       }
     }
@@ -66,8 +68,11 @@ export default {
     treeDeep () {
       return getTreeDeep([this.flowChartDataCopy])
     },
+    brachIngHeight () {
+      return parseInt(this.flowChartConfig.brachIngHeight)
+    },
     rowHeight () {
-      return parseInt(this.flowChartConfig.height) / (this.treeDeep + 1)
+      return (parseInt(this.flowChartConfig.height) - this.brachIngHeight * this.treeDeep) / (this.treeDeep + 1)
     }
   },
   created () {

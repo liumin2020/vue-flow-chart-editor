@@ -1,19 +1,21 @@
 <template>
-  <div :style="{ 'flex-basis': `${columnWidth * treeExtent}px` }" class="flow-item">
+  <div :style="{ 'flex-basis': `${columnWidth * treeExtent}px`, 'max-height': itemData.branchEnd ? `${rowHeight + brachIngHeight}px` : '' }" class="flow-item">
     <div :style="{ 'flex-basis': `${rowHeight}px` }" class="flow-item__content">
       <div class="flow-column-line" :class="{ 'is-column-start': isRowStart, 'is-column-end': isRowEnd }"></div>
-      <div v-if="!isRowStart && !isRowEnd" class="flow-row-top-line" :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"></div>
+      <!-- <div v-if="!isRowStart && !isRowEnd" class="flow-row-top-line" :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"></div> -->
       <flow-handle :flowData="itemData" :isRowStart="isRowStart" @editorValueChange="editorValueChange"></flow-handle>
     </div>
+    <flow-fork-line :style="{ height: `${brachIngHeight}px` }" :forkFlex="itemData.children ? itemData.children.length : 1"></flow-fork-line>
     <template v-if="itemData.children && itemData.children.length">
       <div class="flow__column-item">
-        <div :style="{ 'flex-basis': getPercentage(treeDeep + 1, 1) }" class="flow__row-item">
+        <div :style="{ 'flex-basis': `${rowHeight + brachIngHeight}px` }" class="flow__row-item">
           <flow-item
             v-for="(item, index) in itemData.children"
             :key="`row-item-${index}`"
             :itemData="item"
             :columnWidth="columnWidth"
             :rowHeight="rowHeight"
+            :brachIngHeight="brachIngHeight"
             :isColumnStart="index === 0"
             :isColumnEnd="index === itemData.children.length - 1"
             @editorValueChange="editorValueChange"></flow-item>
@@ -25,12 +27,14 @@
 
 <script>
 import FlowHandle from './FlowHandle'
+import FlowForkLine from './FlowForkLine'
 import { getTreeExtent, getTreeDeep } from './flowChartCommon'
 
 export default {
   name: 'FlowItem',
   components: {
-    FlowHandle
+    FlowHandle,
+    FlowForkLine
   },
   props: {
     itemData: {
@@ -62,6 +66,10 @@ export default {
     rowHeight: {
       type: Number,
       default: 0
+    },
+    brachIngHeight: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -73,14 +81,17 @@ export default {
     },
     treeDeep () {
       return getTreeDeep([this.itemData])
+    },
+    forkFlex () {
+      const res = this.itemData.children.map((item) => {
+        return getTreeExtent(item.children)
+      })
+      return res
     }
   },
   created () {
   },
   methods: {
-    getPercentage (num, val) {
-      return `${(100 / num) * val}%`
-    },
     editorValueChange (val) {
       this.$emit('editorValueChange', val)
     }
@@ -91,6 +102,7 @@ export default {
 <style lang="less" scoped>
 @import './flowChartCommon.less';
 .flow-item {
+  box-sizing: border-box;
   .flow__row-item();
   .position(relative);
   flex-direction: column;
