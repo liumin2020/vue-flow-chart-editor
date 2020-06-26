@@ -1,8 +1,18 @@
 <template>
   <div class="flow-chart-editor__wrapper">
-    <div ref="flowChartEditor" :class="{ 'flow-chart-editor-grid': flowChartConfig.grid }" :style="{ width: flowChartConfig.width, height: flowChartConfig.height }" class="flow-chart-editor">
-      <div :style="{ 'flex-basis': `${rowHeight + brachIngHeight}px` }" class="flow__row-item">
-        <flow-item :itemData="flowChartDataCopy.start" :isRowStart="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange" :brachIngHeight="brachIngHeight"></flow-item>
+    <div ref="flowChartEditor"
+      :class="{ 'flow-chart-editor-grid': flowChartConfig.grid }"
+      :style="{ width: flowChartConfig.width, height: flowChartConfig.height }"
+      class="flow-chart-editor">
+      <div
+        :style="{ 'flex-basis': `${rowHeight + brachIngHeight}px` }"
+        class="flow__row-item">
+        <flow-item
+          :itemData="flowChartDataCopy.start"
+          :isRowStart="true" :columnWidth="columnWidth"
+          :rowHeight="rowHeight"
+          @editorValueChange="editorValueChange"
+          :brachIngHeight="brachIngHeight"></flow-item>
       </div>
       <div :style="{ 'flex-basis': `${rowHeight * (treeDeep - 1) + brachIngHeight * treeDeep / 2}px` }" class="flow__row-item">
         <flow-item
@@ -16,9 +26,16 @@
           :isColumnEnd="index === flowChartDataCopy.children.length - 1"
           @editorValueChange="editorValueChange"></flow-item>
       </div>
-      <div :style="{ 'flex-basis': `${rowHeight}px`, position: 'relative' }" class="flow__row-item">
+      <div
+        :style="{ 'flex-basis': `${rowHeight}px`, position: 'relative' }"
+        class="flow__row-item">
         <!-- <div :style="{ left: `${columnWidth / 2}px`, right: `${columnWidth / 2}px` }" class="flow-row-bottom-line"></div> -->
-        <flow-item :itemData="flowChartDataCopy.end" :isRowEnd="true" :columnWidth="columnWidth" :rowHeight="rowHeight" @editorValueChange="editorValueChange"></flow-item>
+        <flow-item
+          :itemData="flowChartDataCopy.end"
+          :isRowEnd="true" :columnWidth="columnWidth"
+          :rowHeight="rowHeight"
+          @editorValueChange="editorValueChange"
+          :brachIngHeight="brachIngHeight"></flow-item>
       </div>
     </div>
   </div>

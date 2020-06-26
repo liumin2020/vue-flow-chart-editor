@@ -93,8 +93,15 @@
 
 .flow-row-bottom-line {
   .position(absolute, 5);
-  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 2px;
-  margin-bottom: -1px;
   background-color: @color-bg;
+  &.is-row-start {
+    left: 50%;
+  }
+  &.is-row-end {
+    right: 50%;
+  }
 }

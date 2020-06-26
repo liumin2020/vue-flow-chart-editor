@@ -1,11 +1,37 @@
 <template>
-  <div :style="{ 'flex-basis': `${columnWidth * treeExtent}px`, 'max-height': itemData.branchEnd ? `${rowHeight + brachIngHeight}px` : '' }" class="flow-item">
-    <div :style="{ 'flex-basis': `${rowHeight}px` }" class="flow-item__content">
+  <div
+    :style="{ 'flex-basis': `${columnWidth * treeExtent}px`, 'max-height': itemData.branchEnd ? `${rowHeight + brachIngHeight}px` : '' }"
+    class="flow-item">
+    <div
+      :style="{ 'flex-basis': `${rowHeight}px` }"
+      class="flow-item__content">
       <div class="flow-column-line" :class="{ 'is-column-start': isRowStart, 'is-column-end': isRowEnd }"></div>
-      <!-- <div v-if="!isRowStart && !isRowEnd" class="flow-row-top-line" :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"></div> -->
-      <flow-handle :flowData="itemData" :isRowStart="isRowStart" @editorValueChange="editorValueChange"></flow-handle>
+      <div
+        v-if="!isRowStart && !isRowEnd"
+        class="flow-row-top-line"
+        :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"
+        :style="{ 'margin-top': `-${brachIngHeightHalf}px` }"></div>
+      <div
+        v-if="!isRowStart && !isRowEnd"
+        class="flow-row-bottom-line"
+        :class="{ 'is-row-start': isColumnStart, 'is-row-end': isColumnEnd }"
+        :style="{ 'margin-bottom': `-${brachIngHeightHalf}px` }"></div>
+      <div
+        v-if="!isRowEnd"
+        class="line-top-column-line"
+        :style="{ bottom: 0, 'margin-bottom': `-${brachIngHeightHalf}px`, height: `${brachIngHeightHalf}px` }"></div>
+      <div
+        v-if="!isRowStart"
+        class="line-bottom-column-line"
+        :style="{ 'margin-top': `-${brachIngHeightHalf}px`, height: `${brachIngHeightHalf}px` }"></div>
+      <flow-handle
+        :flowData="itemData"
+        :isRowStart="isRowStart"
+        @editorValueChange="editorValueChange"></flow-handle>
     </div>
-    <flow-fork-line :style="{ height: `${brachIngHeight}px` }" :forkFlex="itemData.children ? itemData.children.length : 1"></flow-fork-line>
+    <flow-fork-line
+      :style="{ height: `${brachIngHeight}px` }"
+      :forkFlex="itemData.children ? itemData.children.length : 1"></flow-fork-line>
     <template v-if="itemData.children && itemData.children.length">
       <div class="flow__column-item">
         <div :style="{ 'flex-basis': `${rowHeight + brachIngHeight}px` }" class="flow__row-item">
@@ -83,10 +109,19 @@ export default {
       return getTreeDeep([this.itemData])
     },
     forkFlex () {
-      const res = this.itemData.children.map((item) => {
-        return getTreeExtent(item.children)
-      })
+      let res = 1
+      if (this.itemData.children) {
+        res = this.itemData.children.map((item) => {
+          return getTreeExtent(item.children)
+        })
+      }
       return res
+    },
+    columnWidthHalf () {
+      return this.columnWidth / 2
+    },
+    brachIngHeightHalf () {
+      return this.brachIngHeight / 2
     }
   },
   created () {
@@ -109,6 +144,15 @@ export default {
   .flow-item__content {
     flex: auto;
     .position(relative);
+  }
+  .line-bottom-column-line,
+  .line-top-column-line {
+    position: absolute;
+    width: 2px;
+    left: 50%;
+    z-index: 10;
+    margin-left: -1px;
+    background-color: @color-bg;
   }
 }
 </style>

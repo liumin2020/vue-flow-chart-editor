@@ -1,8 +1,8 @@
 <template>
   <div class="flow-fork-line">
-    <div class="top-center__center-center--line"></div>
-    <div class="center-center__left-right--line"></div>
-    <div class="center-bottom__center-center--line"></div>
+    <!-- <div class="top-center__center-center--line"></div> -->
+    <!-- <div class="center-center__left-right--line"></div> -->
+    <!-- <div class="center-bottom__center-center--line"></div> -->
   </div>
 </template>
 

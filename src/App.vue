@@ -57,7 +57,6 @@ export default {
                 label: '1-2-0',
                 value: '是的选择？',
                 lineText: 'yes',
-                hasBranchEnd: true,
                 children: [
                   {
                     shape: 'rect',
@@ -77,12 +76,6 @@ export default {
                         label: '1-2-0-0-1',
                         value: '是2-1',
                         lineText: '2-1'
-                      },
-                      {
-                        shape: 'rect',
-                        label: '1-2-0-0-2',
-                        value: '是2-2',
-                        lineText: '2-2'
                       }
                     ]
                   },
